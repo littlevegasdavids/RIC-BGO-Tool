@@ -1,5 +1,21 @@
 <script>
+    import { onMount } from 'svelte';
     import FileCard from './FileCard.svelte'
+
+    let users_information_filter
+
+    onMount(async ()=>{
+        const user_id_res = await fetch('/user/getAllUserIds')
+        const user_json = await user_id_res.json()
+        if(!user_json.success){
+            alert('Cannot find users information for filtering')
+        }
+        else{
+            users_information_filter = user_json.user_ids
+            console.log(users_information_filter)
+        }
+    })
+
 
     export let excelFileReady;
     export let excelFileBusy;
@@ -17,6 +33,8 @@
     let startDate
     let endDate
     let filterSkuTypeValue
+    let user_file_input_select = false
+    let user_id_filter
 
     //Alternating card colours
     let cardColourCheck = false
@@ -84,9 +102,21 @@
         fileError = excelFileError;
         fileQueue = excelFileQueue;
         let search = searchValue.toLowerCase()
+        if(searchSelectValue == "User (Input File)"){
+            user_file_input_select = true
+            if(user_id_filter != undefined){
+                fileReady = excelFileReady.filter((file) => {return file.user_id == user_id_filter})
+                fileBusy = excelFileBusy.filter((file) => {return file.user_id == user_id_filter})
+                fileSolved = excelFileSolved.filter((file) => {return file.user_id == user_id_filter})
+                fileError = excelFileError.filter((file) => {return file.user_id == user_id_filter})
+                fileQueue = excelFileQueue.filter((file) => {return file.user_id == user_id_filter})
+            }
+        }
+        else{
+            user_file_input_select = false
+        }
         if(search.trim() != ""){
             if(searchSelectValue == "File Name"){
-                
                 fileReady = excelFileReady.filter((file) => {return file.input_filename.toLowerCase().includes(search)})
                 fileBusy = excelFileBusy.filter((file) => {return file.input_filename.toLowerCase().includes(search)})
                 fileSolved = excelFileSolved.filter((file) => {return file.input_filename.toLowerCase().includes(search)})
@@ -202,14 +232,23 @@
 <div class="flex flex-col">
     {#if excelFileReady.length != 0 || excelFileBusy.length != 0 || excelFileSolved.length != 0 || excelFileError.length != 0 || excelFileQueue != 0}
         <div class="form-control flex-row justify-center mt-5">
+            {#if !user_file_input_select}
             <input type="text" id="searchField" class="input input-bordered mt-5 mb-5 w-44" placeholder="Search" bind:value={searchValue}>
+            {:else}
+            <select class="select select-bordered mt-5 ml-3 w-40" bind:value={user_id_filter}>
+                {#each users_information_filter as user}
+                    <option value={user.id}>{user.name}</option>
+                {/each}
+            </select>
+            {/if}
             <select class="select select-bordered mt-5 ml-3 w-40" bind:value={searchSelectValue}>
                 <option selected>File Name</option>
                 <option>Scenario Code</option>
                 <option>Demand</option>
+                <option>User (Input File)</option>
             </select>
             <span class="text-xl mt-8 mr-2 text-secondary">
-                <div class="tooltip" data-tip="Use search bar to search scenario by file name, scenario code or demand">
+                <div class="tooltip" data-tip="Use search bar to search scenario by file name, scenario code or demand. If filtering by user, then select the user you would like to filter by.">
                     <i class="far fa-info-circle"></i>
                 </div>
             </span>

@@ -12,21 +12,20 @@
     import PasswordReset from './Components/PasswordReset.svelte'
     import ChangePasswordAdmin from "./Components/ChangePasswordAdmin.svelte";
     import {io} from "socket.io-client"
-import { onDestroy } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     //#endregion
 
     let socket = io()
     let user_id
     let role_id
 
-    async function getUserInfo(){
+    onMount(async ()=>{
         const res = await fetch('/user/getUserInfo')
         const json = await res.json()
         user_id = json.user_id
         role_id = json.role_id
         updateScenarios()
-    }
-    getUserInfo()
+    })
 
     let excelFileReady = [];
     let excelFileBusy = [];

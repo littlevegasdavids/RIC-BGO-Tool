@@ -119,8 +119,20 @@ router.post('/changePassword', authenticateToken, async(req, res)=>{
     }
     catch(err){
         logger.error(`User #${req.user_id} change password: ${err}`)
+        return res.status(500).json({success: false})
     }
       
+})
+
+router.get('/getAllUserIds', authenticateToken, async(req, res)=>{
+    try{
+        const {rows} = await db.query('SELECT id, name FROM public."Users"')
+        return res.status(200).json({success: true, user_ids: rows})
+    }
+    catch(err){
+        logger.error(`Cannot get all user ids: ${err}`)
+        return res.status(500).json({success: false})
+    }
 })
 
 function generateAccessToken(id, role_id){
