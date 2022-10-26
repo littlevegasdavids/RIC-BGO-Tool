@@ -3,6 +3,7 @@
     import FileCard from './FileCard.svelte'
 
     let users_information_filter
+    let role_id = "N/A"
 
     onMount(async ()=>{
         const user_id_res = await fetch('/user/getAllUserIds')
@@ -12,8 +13,12 @@
         }
         else{
             users_information_filter = user_json.user_ids
-            console.log(users_information_filter)
         }
+
+        const role_res = await fetch('/user/getUserInfo')
+        const role_json = await role_res.json()
+
+        role_id = role_json.role_id
     })
 
 
@@ -235,17 +240,21 @@
             {#if !user_file_input_select}
             <input type="text" id="searchField" class="input input-bordered mt-5 mb-5 w-44" placeholder="Search" bind:value={searchValue}>
             {:else}
-            <select class="select select-bordered mt-5 ml-3 w-40" bind:value={user_id_filter}>
-                {#each users_information_filter as user}
-                    <option value={user.id}>{user.name}</option>
-                {/each}
-            </select>
+                {#if role_id != 3 && role_id != "NaN"}
+                <select class="select select-bordered mt-5 ml-3 w-40" bind:value={user_id_filter}>
+                    {#each users_information_filter as user}
+                        <option value={user.id}>{user.name}</option>
+                    {/each}
+                </select>
+                {/if}
             {/if}
             <select class="select select-bordered mt-5 ml-3 w-40" bind:value={searchSelectValue}>
                 <option selected>File Name</option>
                 <option>Scenario Code</option>
                 <option>Demand</option>
-                <option>User (Input File)</option>
+                {#if role_id != 3 && role_id != "NaN"}
+                    <option>User (Input File)</option>
+                {/if}
             </select>
             <span class="text-xl mt-8 mr-2 text-secondary">
                 <div class="tooltip" data-tip="Use search bar to search scenario by file name, scenario code or demand. If filtering by user, then select the user you would like to filter by.">

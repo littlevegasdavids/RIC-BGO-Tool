@@ -52,9 +52,9 @@ function getGreeting(){
     </div> 
     <div class="navbar-end">
         {#if login && !hideButtonsPassReset()}
-            <div class="dropdown dropdown-hover">
-                <p tabindex="0" class="btn m-1">Menu<i class="fas fa-bars"></i></p>
-                <ul tabindex ="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+            <div class="dropdown dropdown-hover dropdown-end">
+                <p class="btn m-1">Menu<i class="fas fa-bars"></i></p>
+                <ul class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                     {#if role_id === "1" && !adminPortal()}
                         <li class="rounded-box btn-primary"><a href="/adminPortal">Admin portal<i class="fas fa-user-shield"></i></a></li>
                     {:else if role_id === "1" && adminPortal()}

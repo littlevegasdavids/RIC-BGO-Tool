@@ -3,7 +3,7 @@
         <img src="images/RIC_Logo.png" alt="Mark Anthony Brewing Logo" width="350px" height="100px" class="">
         <div class="font-bold text-white">
             <p class="footer-info">
-              <i class="fas fa-globe"></i><a href="http://www.ricgroup.net/" target="_blank" class="link">http://www.ricgroup.net/</a>
+              <i class="fas fa-globe"></i><a href="http://www.ricgroup.net/" target="_blank" class="link" rel="noreferrer">http://www.ricgroup.net/</a>
             </p>
             <p class="footer-info">
                 <i class="fas fa-phone-alt"></i>+27 (0)11 447 2017
