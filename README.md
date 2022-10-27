@@ -1,5 +1,5 @@
 # 🔧 The RIC BGO TOOL 🔧
-An online web-app in which employees and clients of [RIC](http://ricgroup.net/) use as a central excel file repository that are uploaded and put through a Python script that optimises the excel values in an automation fashion.
+An online web-app in which employees and clients of [RIC](http://ricgroup.net/) use as a central excel file repository that are uploaded and put through a Python script that optimises the excel values in an automated fashion.
 
 #
 
