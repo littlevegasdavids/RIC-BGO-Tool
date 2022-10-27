@@ -1,4 +1,4 @@
-# 🔧 The RIC BGO TOOL 🔧
+# 🔨 The RIC BGO TOOL 🔨
 An online web-app in which employees and clients of [RIC](http://ricgroup.net/) use as a central excel file repository that are uploaded and put through a Python script that optimises the excel values in an automated fashion.
 
 
@@ -11,7 +11,7 @@ These same RIC employees soon realised how tedious it was to manually change the
 ## ✅ Solution ✅
 One of the employees at RIC approached me in order to solve this problem. Myself and Angelo (RIC employee) are long time school friends and studied together at the University of Pretoria, he knew I studied Computer Science so designing and creating a solution was right up my alley. 
 
-The BGO Tool consists of the following technologies: 
+## 🔧 Technologies 🔧
 
 **Frontend**: Svelte and Tailwindcss 
 <br/>
