@@ -5,10 +5,8 @@ const port = process.env.PORT
 const cookieParser = require('cookie-parser')
 
 const io = require('socket.io')()
-io.configure(function () { 
-    io.set("transports", ["xhr-polling"]); 
-    io.set("polling duration", 10); 
-})
+io.set("transports", ["xhr-polling"]); 
+io.set("polling duration", 10); 
 
 const logger = require('./helpers/logger')
 
