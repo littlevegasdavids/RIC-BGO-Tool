@@ -88,12 +88,14 @@
 
 <Router>
 <div class="appContainer">
+    <!--
     {#if showFirefoxPopup}
         <div class="grid bg-primary rounded-lg my-3 p-1">
             <p class="text-center font-bold">The BGO Tool is currently having issues with all Chrome browsers. Please use the Firefox web browser to get better performance in the mean time.</p>
             <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank" rel="noreferrer" class="text-center underline underline-1">Click here to download Firefox</a>
         </div>
     {/if}
+    -->
     <NavBar login={login}/>
 
     <Route path="/passwordReset">
