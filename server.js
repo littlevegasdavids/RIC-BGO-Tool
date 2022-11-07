@@ -3,7 +3,12 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT
 const cookieParser = require('cookie-parser')
+
 const io = require('socket.io')()
+io.configure(function () { 
+    io.set("transports", ["xhr-polling"]); 
+    io.set("polling duration", 10); 
+})
 
 const logger = require('./helpers/logger')
 
@@ -23,6 +28,7 @@ app.use(cookieParser())
 var server = require('http').createServer(app).listen(port, function(){
     logger.info(`Server is now live on http://localhost:${port}`)
 })
+
 io.listen(server)
 require('./helpers/socket')(io)
 app.use(function(req, res, next){
