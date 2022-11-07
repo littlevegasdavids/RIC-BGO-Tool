@@ -4,9 +4,7 @@ const app = express()
 const port = process.env.PORT
 const cookieParser = require('cookie-parser')
 
-const io = require('socket.io')()
-io.set("transports", ["xhr-polling"]); 
-io.set("polling duration", 10); 
+const io = require('socket.io')() 
 
 const logger = require('./helpers/logger')
 
