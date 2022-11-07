@@ -12,6 +12,10 @@ const db = require('./db/index')
 const {authenticateTokenAdmin, authenticateToken} = require('./middleware/authMiddleware')
 
 app.use(express.static('public'))
+
+const compression = require('compression')
+app.use(compression())
+
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser())
