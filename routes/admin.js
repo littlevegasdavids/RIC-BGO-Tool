@@ -78,7 +78,6 @@ router.delete('/deleteUser/:id', authenticateTokenAdmin, async(req, res)=>{
             return res.status(400).send(`User #${user_id} does not exist`)
         }
         else{
-            await deleteUserScenarios(user_id)
             const {rows} = await db.query('DELETE FROM public."Users" WHERE id = $1 RETURNING email', [user_id])
             const del_email = rows[0].email
             logger.info(`Success deleting user #${user_id} - ${del_email}: Admin #${admin_id}`)
@@ -219,29 +218,4 @@ function checkRoleId(role_id){
     if(role_id < 0) return false
     if(role_id > 3) return false
     return true
-}
-
-async function deleteUserScenarios(user_id){
-    const {rows} = await db.query('SELECT id FROM public."Scenarios" WHERE user_id = $1', [user_id])
-    if(rows.length != 0){
-        for(let i = 0; i < rows.length; i++){
-            let scenario_id = rows[i].id
-            await db.query('DELETE FROM public."FGSQ" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."FG_Cm" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."PdS_Pd" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."PdStQ" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."Pd_Pk" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."PkLnQ" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."PkS_Pk" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."Pk_FG" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."Pk_WIP" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."WIPSQ" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."WIP_rPK" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."rPkLnQ" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."rPkS_rPk" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."rPk_FG" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."Scenarios" WHERE id = $1', [scenario_id])
-        }
-    }
-    
 }

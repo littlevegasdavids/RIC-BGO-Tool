@@ -98,21 +98,6 @@ router.delete('/deleteScenario/:id', authenticateToken, async function(req, res)
                 return res.status(401).send(`Not allowed to delete this scenario`)
             }
         }
-        // Passed all checks can now delete scenario from all tables
-        await db.query('DELETE FROM public."FGSQ" WHERE scenario_id = $1', [scenario_id])
-        await db.query('DELETE FROM public."FG_Cm" WHERE scenario_id = $1', [scenario_id])
-        await db.query('DELETE FROM public."PdS_Pd" WHERE scenario_id = $1', [scenario_id])
-        await db.query('DELETE FROM public."PdStQ" WHERE scenario_id = $1', [scenario_id])
-        await db.query('DELETE FROM public."Pd_Pk" WHERE scenario_id = $1', [scenario_id])
-        await db.query('DELETE FROM public."PkLnQ" WHERE scenario_id = $1', [scenario_id])
-        await db.query('DELETE FROM public."PkS_Pk" WHERE scenario_id = $1', [scenario_id])
-        await db.query('DELETE FROM public."Pk_FG" WHERE scenario_id = $1', [scenario_id])
-        await db.query('DELETE FROM public."Pk_WIP" WHERE scenario_id = $1', [scenario_id])
-        await db.query('DELETE FROM public."WIPSQ" WHERE scenario_id = $1', [scenario_id])
-        await db.query('DELETE FROM public."WIP_rPK" WHERE scenario_id = $1', [scenario_id])
-        await db.query('DELETE FROM public."rPkLnQ" WHERE scenario_id = $1', [scenario_id])
-        await db.query('DELETE FROM public."rPkS_rPk" WHERE scenario_id = $1', [scenario_id])
-        await db.query('DELETE FROM public."rPk_FG" WHERE scenario_id = $1', [scenario_id])
         await db.query('DELETE FROM public."Scenarios" WHERE id = $1', [scenario_id])
     
         const fileName = scenario_id + ".xlsx"
