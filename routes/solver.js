@@ -195,7 +195,7 @@ var solveScenario = async function(scenario_id, user_email, callback){
 // If their is any item in the queue then it will take the first one 
 // Should not remove it from the queue because the solveScenario function will do that
 
-/*
+
 setInterval(async ()=>{
     const {rows} = await db.query('SELECT id, user_id FROM public."Scenarios" WHERE scenario_status = $1', [6])
     if(rows.length > 0 && !solverBusy){
@@ -214,7 +214,7 @@ setInterval(async ()=>{
     }
 }, 5000)
 
-*/
+
 
 async function getUserEmail(user_id){
     const {rows} = await db.query('SELECT email FROM public."Users" WHERE id = $1', [user_id])
