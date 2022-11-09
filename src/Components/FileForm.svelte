@@ -1,4 +1,6 @@
 <script>
+    import {show_upload_scenario_pop_up} from '../Stores/upload_scenario_popup'
+    import Upload_Scenario_Popup from '../Components/Popups/Upload_Scenario_Popup.svelte'
     let showErrorMsg = false;
     let excelFile;
     let submitBtn;
@@ -31,11 +33,8 @@
     }
 
     function disableBtn(){
+        $show_upload_scenario_pop_up = true
         submitBtn.disabled = true
-        setTimeout(() => {
-            window.alert('Uploading Scenario. This may take a couple of seconds, press Ok to continue upload')
-        }, 500);
-        
     }
 </script>
 
@@ -56,6 +55,10 @@
         </div> 
     </div>
 </form>
+
+{#if $show_upload_scenario_pop_up}
+    <Upload_Scenario_Popup />
+{/if}
 
 <style>
     i{
