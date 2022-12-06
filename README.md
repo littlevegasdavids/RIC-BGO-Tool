@@ -9,6 +9,8 @@ These same RIC employees soon realised how tedious it was to manually change the
 ## ✅ Solution ✅
 One of the employees at RIC approached me in order to solve this problem. Myself and Angelo (RIC employee) are long time school friends and studied together at the University of Pretoria, he knew I studied Computer Science so designing and creating a solution was right up my alley. 
 
+I created a fullstack web application which allows excel files to be uploaded to a server. These files then can be sent to the Gurobi Solver python script through the click of a button on the website interface. Once completed a new output file is created and stored on the server which can be downloaded by a specific user.
+
 ## 📚 What I learnt 📚
 This was my first freelance project outside of university. This project took me about 2 months to create and implement. 
 
