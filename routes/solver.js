@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const router = new Router()
 const { authenticateToken } = require('../middleware/authMiddleware');
-const {sendSuccessEmail, sendErrorMail, sendUserKillMail} = require('../helpers/mailer')
+//const {sendSuccessEmail, sendErrorMail, sendUserKillMail} = require('../helpers/mailer')
 
 const logger = require('../helpers/logger')
 
@@ -162,7 +162,7 @@ var solveScenario = async function(scenario_id, user_email, callback){
             //The only time scenario status is an error before catching error in python file is when the user has killed the solver
             const {rows} = await db.query('SELECT scenario_status, error_message FROM public."Scenarios" WHERE id = $1', [scenario_id])
             if(rows[0].scenario_status == 5 && rows[0].error_message == "Killed by user"){
-                await sendUserKillMail(scenario_id, user_email)
+                //await sendUserKillMail(scenario_id, user_email)
                 writeStream.write('Killed by user')
             }
             
@@ -173,12 +173,12 @@ var solveScenario = async function(scenario_id, user_email, callback){
 
             if(!errorEncountered){
                 logger.info(`Solver success scenario #${scenario_id}`)
-                await sendSuccessEmail(scenario_id, user_email)
+                //await sendSuccessEmail(scenario_id, user_email)
             }
             else{
                 logger.error(`Solver error scenario #${scenario_id}: ${error}`)
                 await db.query('UPDATE public."Scenarios" SET error_message = $1, scenario_status = $2 WHERE id = $3', [error, 5,scenario_id])
-                await sendErrorMail(scenario_id, user_email, error)
+                //await sendErrorMail(scenario_id, user_email, error)
                 writeStream.write(error)
             }
             writeStream.end()
@@ -195,7 +195,7 @@ var solveScenario = async function(scenario_id, user_email, callback){
 // If their is any item in the queue then it will take the first one 
 // Should not remove it from the queue because the solveScenario function will do that
 
-
+/*
 setInterval(async ()=>{
     const {rows} = await db.query('SELECT id, user_id FROM public."Scenarios" WHERE scenario_status = $1', [6])
     if(rows.length > 0 && !solverBusy){
@@ -213,6 +213,7 @@ setInterval(async ()=>{
         }
     }
 }, 5000)
+*/
 
 
 
