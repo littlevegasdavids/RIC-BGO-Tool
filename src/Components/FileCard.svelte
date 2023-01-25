@@ -1,6 +1,8 @@
 <script>
-
     import {onDestroy, onMount} from 'svelte'
+    import {show_delete_scenario_popup} from '../Stores/delete_scenario_popup'
+    import {show_kill_solver_popup} from '../Stores/kill_solver_popup'
+    import {show_send_to_queue_popup} from '../Stores/send_to_queue_popup'
 
     export let fileId;
     export let fileName;
@@ -24,19 +26,28 @@
     import {io} from "socket.io-client"
     let socket = io()
     onMount(()=>{
-        if(textArea != null){
-            socket.on('solverFeedback', (text)=>{
-            solverFeedback += text
-            textArea.scrollTop = textArea.scrollHeight
-        })
+            if(textArea != null){
+                socket.on('solverFeedback', (text)=>{
+                solverFeedback += text
+                textArea.scrollTop = textArea.scrollHeight
+            })
         }
-        
     })
     
 
     async function deleteFile(id){
         if(confirm(`Are you sure you want to delete Scenario #${id} ?`)){
-            await fetch(`/scenarios/deleteScenario/${id}`, {method:'DELETE'})
+            $show_delete_scenario_popup = true
+            const res = await fetch(`/scenarios/deleteScenario/${id}`, {method:'DELETE'})
+            const result = await res.json()
+
+            if(result.success){
+                window.location.reload()
+            }
+            else{
+                alert(`Error deleting scenario #${id}`)
+            }
+            
         }
         
     }
@@ -54,13 +65,32 @@
     }
 
     async function sendToQueue(id){
-        await fetch(`/solver/sendToQueue/${id}`, {method: 'POST'})
+        $show_send_to_queue_popup = true
+        const res = await fetch(`/solver/sendToQueue/${id}`, {method: 'POST'})
+        const result = await res.json()
+
+        if(result.success){
+            
+            window.location.href = "/queue"
+        }
+        else{
+            alert(`Error sending scenario #${id} to solver.`)
+        }
     }
 
     async function killSolver(id){
         const text = `Are you sure you want to kill scenario ${id} while busy solving ?`
         if(confirm(text)){
-            await fetch(`/solver/killSolver/${id}`, {method: 'DELETE'})
+            $show_kill_solver_popup = true
+            const res = await fetch(`/solver/killSolver/${id}`, {method: 'DELETE'})
+            const result = await res.json()
+
+            if(result.success){
+                window.location.href = "/error"
+            }
+            else{
+                alert('Error stopping scenario')
+            }
         }
         
     }

@@ -6,7 +6,7 @@ const saltRounds = 9;
 
 const {checkPassword} = require('../helpers/checker')
 
-//const {sendChangePassword} = require('../helpers/mailer')
+const {sendChangePassword} = require('../helpers/mailer')
 
 const db = require('../db')
 
@@ -106,7 +106,7 @@ router.post('/changePassword', authenticateToken, async(req, res)=>{
                                 return res.status(500).json({success:false})
                             }
                             const {rows} = await db.query(`UPDATE public."Users" SET password = $1 WHERE id = $2 RETURNING email`, [hash, user_id])
-                            //sendChangePassword(rows[0].email)
+                            sendChangePassword(rows[0].email)
                             logger.info(`User #${user_id} has changed their password`)
                             return res.status(200).json({
                                 success: true

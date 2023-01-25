@@ -1,5 +1,5 @@
 
-/*
+
 require('dotenv').config()
 const nodemailer = require('nodemailer')
 const {google} = require('googleapis')
@@ -152,4 +152,3 @@ async function getUserName(email){
 }
 
 module.exports = {sendSuccessEmail, sendErrorMail, sendUserKillMail, sendRegisterMail, sendAdminChangePassword, sendChangePassword}
-*/

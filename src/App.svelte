@@ -1,13 +1,6 @@
 <script>
-    let browser = navigator.userAgent
-    let showFirefoxPopup = false
-    if(browser.match(/chrome|chromium|crios/i)){
-        showFirefoxPopup = true
-    }
     //#region Imports
     import {Router, Route} from "svelte-routing"
-	import FileForm from './Components/FileForm.svelte'
-	import FileList from './Components/FileList.svelte'
     import NavBar from './Components/NavBar.svelte'
     import Footer from './Components/Footer.svelte'
     import SignInForm from './Components/SignInForm.svelte'
@@ -16,27 +9,12 @@
     import ChangePassword from './Components/ChangePassword.svelte'
     import PasswordReset from './Components/PasswordReset.svelte'
     import ChangePasswordAdmin from "./Components/ChangePasswordAdmin.svelte";
-    import {io} from "socket.io-client"
-    import { onDestroy, onMount } from "svelte";
+    import SolvedScenarios from "./Components/Scenarios/SolvedScenarios.svelte"
+    import ReadyScenarios from "./Components/Scenarios/ReadyScenarios.svelte";
+    import ErrorScenarios from "./Components/Scenarios/ErrorScenarios.svelte";
+    import QueueScenarios from "./Components/Scenarios/QueueScenarios.svelte";
     //#endregion
 
-    let socket = io()
-    let user_id
-    let role_id
-
-    onMount(async ()=>{
-        const res = await fetch('/user/getUserInfo')
-        const json = await res.json()
-        user_id = json.user_id
-        role_id = json.role_id
-        updateScenarios()
-    })
-
-    let excelFileReady = [];
-    let excelFileBusy = [];
-    let excelFileSolved = [];
-    let excelFileError = [];
-    let excelFileQueue = []
     var login = checkUserSession();
     
     // Function that checks if their is a token set
@@ -54,36 +32,6 @@
         }
         return false
     }
-
-    let interval
-
-    //excelFiles Socket session
-    if(login){
-        socket.on('receiveScenarios', (response)=>{
-            excelFileReady = response.ready
-            excelFileBusy = response.busy
-            excelFileSolved = response.solved 
-            excelFileError = response.error
-            excelFileQueue = response.queue
-        })
-
-        socket.on('updateScenarios', ()=>{
-            updateScenarios()
-        })
-
-        interval = setInterval(() => {
-            updateScenarios()
-        }, 3000);
-        
-    }
-    function updateScenarios(){
-        socket.emit('getScenarios', {user_id, role_id})
-    }
-
-    onDestroy(()=>{
-        clearInterval(interval)
-        socket.disconnect()
-    })
 </script>
 
 <Router>
@@ -100,20 +48,23 @@
     </div>
     {:else}
     <main>
+        
         <Route path="/">
-        <div class="formContainer">
-            <FileForm />
-        </div>
-        <div class="nContainer">
-            <FileList 
-                excelFileReady={excelFileReady}
-                excelFileBusy={excelFileBusy}
-                excelFileSolved={excelFileSolved}
-                excelFileError={excelFileError}
-                excelFileQueue={excelFileQueue}
-            />   
-        </div>
+            <ReadyScenarios />
         </Route>
+
+        <Route path="/solved">
+            <SolvedScenarios/>
+        </Route>
+
+        <Route path="/error">
+            <ErrorScenarios/>
+        </Route>
+
+        <Route path="/queue">
+            <QueueScenarios/>
+        </Route>
+
         <Route path="adminPortal">
             <div class="nContainer">
                 <AdminPortal />
@@ -146,14 +97,7 @@
         margin: 0 auto;
         padding: 0 30px;
     }
-
-    .formContainer{
-        max-width: 750px;
-        margin: 0 auto;
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-
+    
     .signInFormContainer{
         max-width: 600px;
         margin: 0 auto;

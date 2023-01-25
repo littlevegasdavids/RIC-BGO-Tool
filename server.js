@@ -62,3 +62,20 @@ app.get('/changePasswordAdmin/:id', authenticateTokenAdmin, async (req, res)=>{
 app.get('/passwordReset', authenticateToken, (req, res)=>{
     res.sendFile(__dirname + "/public/index.html")
 })
+
+app.get("/error", authenticateToken, (req, res)=>{
+    res.sendFile(__dirname + "/public/index.html")
+})
+
+app.get("/queue", authenticateToken, (req, res)=>{
+    res.sendFile(__dirname + "/public/index.html")
+})
+
+app.get("/solved", authenticateToken, (req, res)=>{
+    res.sendFile(__dirname + "/public/index.html")
+})
+
+app.get('/', authenticateToken, (req, res)=>{
+    console.log('here')
+    return res.redirect('/ready')
+})

@@ -7,8 +7,6 @@ const logger = require('../helpers/logger')
 
 const db = require('../db')
 
-const io = global.io
-
 const { Router } = require('express')
 const router = new Router()
 module.exports = router
@@ -106,11 +104,11 @@ router.delete('/deleteScenario/:id', authenticateToken, async function(req, res)
         fileSystem.unlink('excelFiles/solved/' + fileName, function(err){})
         fileSystem.unlink('excelFiles/logs/' + logName, function(err){})
         logger.info(`Successfully deleted scenario #${scenario_id}: User #${user_id}`)
-        io.sockets.emit('updateScenarios')
         return res.json({success:true})
     }
     catch(err){
         logger.error(`Deleting scenario #${scenario_id}: ${err}`)
+        return res.json({success: false})
     }
     
 })
@@ -225,5 +223,71 @@ router.get('/downloadLog/:id', authenticateToken, async function(req, res){
     }
     catch(err){
         logger.error(`User #${user_id} downloading input file for scenario #${file_id}" ${err}`)
+    }
+})
+
+router.get('/solved', authenticateToken, async function(req, res){
+    try{
+        const role_id = req.role_id
+
+        if(role_id === 3){
+            const user_id = req.user_id
+            const {rows} = await db.query('SELECT * FROM public."Scenarios" WHERE user_id = $1 AND scenario_status = 4 ORDER BY id DESC', [user_id])
+
+            return res.status(200).json({success: true, scenarios:rows})
+        }
+        else{
+            const {rows} = await db.query('SELECT * FROM public."Scenarios" WHERE scenario_status = 4 ORDER BY id DESC')
+            return res.status(200).json({success: true, scenarios:rows})
+        }
+        
+    }
+    catch(err){
+        logger.error(`Scenario.js /solved route - ${err}`)
+        return res.status(500).json({success: false})
+    }
+})
+
+router.get('/ready', authenticateToken, async function(req, res){
+    try{
+        const role_id = req.role_id
+
+        if(role_id === 3){
+            const user_id = req.user_id
+            const {rows} = await db.query('SELECT * FROM public."Scenarios" WHERE user_id = $1 AND scenario_status = 0 ORDER BY id DESC', [user_id])
+
+            return res.status(200).json({success: true, scenarios:rows})
+        }
+        else{
+            const {rows} = await db.query('SELECT * FROM public."Scenarios" WHERE scenario_status = 0 ORDER BY id DESC')
+            return res.status(200).json({success: true, scenarios:rows})
+        }
+        
+    }
+    catch(err){
+        logger.error(`Scenario.js /ready route - ${err}`)
+        return res.status(500).json({success: false})
+    }
+})
+
+router.get('/error', authenticateToken, async function(req, res){
+    try{
+        const role_id = req.role_id
+
+        if(role_id === 3){
+            const user_id = req.user_id
+            const {rows} = await db.query('SELECT * FROM public."Scenarios" WHERE user_id = $1 AND scenario_status = 5 ORDER BY id DESC', [user_id])
+
+            return res.status(200).json({success: true, scenarios:rows})
+        }
+        else{
+            const {rows} = await db.query('SELECT * FROM public."Scenarios" WHERE scenario_status = 5 ORDER BY id DESC')
+            return res.status(200).json({success: true, scenarios:rows})
+        }
+        
+    }
+    catch(err){
+        logger.error(`Scenario.js /error route - ${err}`)
+        return res.status(500).json({success: false})
     }
 })
