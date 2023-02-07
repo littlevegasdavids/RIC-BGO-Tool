@@ -1,9 +1,10 @@
 <script>
     import { onDestroy, onMount } from "svelte";
-    import FileCard from "../FileCard.svelte";
     import {io} from 'socket.io-client'
     import KillSolverPopup from "../Popups/Kill_Solver_Popup.svelte";
     import {show_kill_solver_popup} from '../../Stores/kill_solver_popup'
+    import QueueCard from "../FileCard/QueueCard.svelte";
+    import BusyCard from "../FileCard/BusyCard.svelte";
 
     let queueScenarios = []
     let busyScenario = []
@@ -91,9 +92,7 @@
         <div class="card-body">
             <p class="card-title text-black text-center text-3xl">Busy - {busyStatus}<i class="fas fa-spinner fa-spin ml-2"></i></p>
             {#each busyScenario as file}
-                <FileCard fileId={file.id} fileName={file.input_filename} uploadedDateTime={file.upload_date} disableSolver={true} 
-                solvedDateTime={file.solved_date} status={file.scenario_status} errorMessage={file.error_message} scenarioCode = {file.scenario_code} cardColour={getCardColour()}
-                demand={file.demand}/>
+                <BusyCard fileId={file.id} fileName={file.input_filename} uploadedDateTime={file.upload_date} scenarioCode = {file.scenario_code} cardColour={getCardColour()} demand={file.demand}/>
             {/each}
         </div>
     </div>
@@ -107,9 +106,7 @@
             <div class="card-body">
                 <p class="card-title text-black text-center text-3xl">Queue</p>
                 {#each queueScenarios as file}
-                    <FileCard fileId={file.id} fileName={file.input_filename} uploadedDateTime={file.upload_date} disableSolver={true} 
-                    solvedDateTime={file.solved_date} status={file.scenario_status} errorMessage={file.error_message} scenarioCode = {file.scenario_code} cardColour={getCardColour()}
-                    demand={file.demand}/>
+                    <QueueCard fileId={file.id} fileName={file.input_filename} uploadedDateTime={file.upload_date} scenarioCode = {file.scenario_code} cardColour={getCardColour()} demand={file.demand}/>
                 {/each}
             </div>
         </div>

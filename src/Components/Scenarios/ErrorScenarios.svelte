@@ -1,8 +1,8 @@
 <script>
     import { onMount } from "svelte";
-    import FileCard from "../FileCard.svelte";
     import DeleteScenarioPopup from "../Popups/Delete_Scenario_Popup.svelte";
     import {show_delete_scenario_popup} from '../../Stores/delete_scenario_popup'
+    import ErrorCard from "../FileCard/ErrorCard.svelte";
 
     let errorScenarios = []
     let finalScenarios = []
@@ -190,9 +190,8 @@
             <div class="card-body">
                 <p class="card-title text-black text-center text-3xl">Error</p>
                 {#each finalScenarios as file}
-                    <FileCard fileId={file.id} fileName={file.input_filename} uploadedDateTime={file.upload_date} disableSolver={true} 
-                    solvedDateTime={file.solved_date} status={file.scenario_status} errorMessage={file.error_message} scenarioCode = {file.scenario_code} cardColour={getCardColour()}
-                    demand={file.demand}/>
+                    <ErrorCard fileId={file.id} fileName={file.input_filename} uploadedDateTime={file.upload_date} 
+                    status={file.scenario_status} errorMessage={file.error_message} scenarioCode={file.scenario_code} cardColour={getCardColour()} demand={file.demand}/>
                 {/each}
             </div>
         </div>

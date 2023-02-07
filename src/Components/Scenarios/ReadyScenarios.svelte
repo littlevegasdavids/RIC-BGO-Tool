@@ -1,11 +1,11 @@
 <script>
     import { onMount } from "svelte";
-    import FileCard from "../FileCard.svelte";
     import FileForm from "../FileForm.svelte";
     import DeleteScenarioPopup from "../Popups/Delete_Scenario_Popup.svelte";
     import {show_delete_scenario_popup} from '../../Stores/delete_scenario_popup'
     import SendToQueuePopup from "../Popups/Send_To_Queue_Popup.svelte";
     import {show_send_to_queue_popup} from '../../Stores/send_to_queue_popup'
+    import ReadyCard from "../FileCard/ReadyCard.svelte";
 
     let readyScenarios = []
     let finalScenarios = []
@@ -201,9 +201,7 @@
                 <div class="card-body">
                     <p class="card-title text-black text-center text-3xl">Ready</p>
                     {#each finalScenarios as file}
-                        <FileCard fileId={file.id} fileName={file.input_filename} uploadedDateTime={file.upload_date} disableSolver={false} 
-                        solvedDateTime={file.solved_date} status={file.scenario_status} errorMessage={""} scenarioCode = {file.scenario_code} cardColour={getCardColour()}
-                        demand={file.demand}/>
+                        <ReadyCard fileId={file.id} fileName={file.input_filename} uploadedDateTime={file.upload_date} status={file.scenario_status} scenarioCode = {file.scenario_code} cardColour={getCardColour()} demand={file.demand}/>
                     {/each}
                 </div>
             </div>
