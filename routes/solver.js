@@ -7,11 +7,11 @@ const logger = require('../helpers/logger')
 
 const fileSystem = require('fs');
 const db = require('../db');
-//const pythonFileName = "Solver_Simulate.py"
-const pythonFileName = "Solver.py"
+const { setTimeout } = require('timers');
+const pythonFileName = "Solver_Simulate.py"
+//const pythonFileName = "Solver.py"
 const pySpawn = require('child_process').spawn;
 var py;
-let solverBusy = false
 let io = global.io
 
 
@@ -140,20 +140,6 @@ var solveScenario = async function(scenario_id, user_email, callback){
         py.stderr.on('data', async (data)=>{
             errorEncountered = true
             error = String(data)
-            await db.query('DELETE FROM public."FGSQ" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."FG_Cm" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."PdS_Pd" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."PdStQ" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."Pd_Pk" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."PkLnQ" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."PkS_Pk" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."Pk_FG" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."Pk_WIP" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."WIPSQ" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."WIP_rPK" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."rPkLnQ" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."rPkS_rPk" WHERE scenario_id = $1', [scenario_id])
-            await db.query('DELETE FROM public."rPk_FG" WHERE scenario_id = $1', [scenario_id])
         })
 
         py.on('exit', async function(code){
@@ -197,6 +183,10 @@ var solveScenario = async function(scenario_id, user_email, callback){
 
 setInterval(async ()=>{
     const {rows} = await db.query('SELECT id, user_id FROM public."Scenarios" WHERE scenario_status = $1', [6])
+
+    const is_busy_query = await db.query('SELECT is_busy FROM public."Solver_Busy" WHERE id = 1')
+    let solverBusy = is_busy_query.rows[0].is_busy
+
     if(rows.length > 0 && !solverBusy){
         if(!solverBusy){
             solverBusy = true
@@ -205,8 +195,8 @@ setInterval(async ()=>{
             const user_id = rows[0].user_id
 
             const user_email = await getUserEmail(user_id)
-            solveScenario(scenario_id, user_email, ()=>{
-                solverBusy = false
+            solveScenario(scenario_id, user_email, async ()=>{
+                await db.query('UPDATE public."Solver_Busy" SET is_busy = false')
             })
         }
     }
