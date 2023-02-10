@@ -8,8 +8,8 @@ const logger = require('../helpers/logger')
 const fileSystem = require('fs');
 const db = require('../db');
 const { setTimeout } = require('timers');
-const pythonFileName = "Solver_Simulate.py"
-//const pythonFileName = "Solver.py"
+//const pythonFileName = "Solver_Simulate.py"
+const pythonFileName = "Solver.py"
 const pySpawn = require('child_process').spawn;
 var py;
 let io = global.io
