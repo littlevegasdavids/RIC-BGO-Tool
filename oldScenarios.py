@@ -24,15 +24,30 @@ db_cur.execute('SELECT id FROM public."Scenarios" WHERE upload_date < %s', (thre
 result = db_cur.fetchall()
 
 ids = [item[0] for item in result]
-# Get the smallest id
-id = min(ids)
 
+#print('The following ids are older than three months:', ids)
+id = min(id)
 print('Deleting the following id:', id)
 db_cur.execute('DELETE FROM public."Scenarios" WHERE id = %s', (id,))
 db_conn.commit()
+# Delete files from excelFiles/solved excelFiles/logs excelFiles/uploaded
+os.remove(f"excelFiles/solved/{id}.xlsx")
+os.remove(f"excelFiles/uploaded/{id}.xlsx")
+os.remove(f"excelFiles/logs/{id}.txt")
+
+# Delete all the scenarios that are older than three months
+# for id in ids:
+#     print('Deleting the following id:', id)
+#     db_cur.execute('DELETE FROM public."Scenarios" WHERE id = %s', (id,))
+#     db_conn.commit()
+#     # Delete files from excelFiles/solved excelFiles/logs excelFiles/uploaded
+#     os.remove(f"excelFiles/solved/{id}.xlsx")
+#     os.remove(f"excelFiles/uploaded/{id}.xlsx")
+#     os.remove(f"excelFiles/logs/{id}.txt")
+
 
 # Closing the connection
 db_cur.close()
 db_conn.close()
 
-print('Deleted ids:', ids[0])
+print('Successfully deleted all files')
