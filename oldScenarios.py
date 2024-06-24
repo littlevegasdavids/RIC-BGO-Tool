@@ -19,6 +19,6 @@ three_months_ago = datetime.now() - timedelta(days=90)
 # Convert to the appropriate format if needed
 three_months_ago_str = three_months_ago.strftime('%Y-%m-%d')
 
-ids = db_cur.execute('SELECT id "public"."Scenarios" SET uploaded_date > ', (three_months_ago_str))
+ids = db_cur.execute('SELECT id "public"."Scenarios" WHERE uploaded_date > ', (three_months_ago_str))
 
 print(ids)
