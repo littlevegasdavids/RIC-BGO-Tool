@@ -23,8 +23,10 @@ query = 'SELECT id FROM public."Scenarios" WHERE upload_date > %s'
 # Executing the SQL query
 db_cur.execute(query, (three_months_ago_str,))
 
-# Fetching the results
-ids = db_cur.fetchall()
+# Fetching the results - result is [(1,), (2,)]
+result = db_cur.fetchall()
+
+ids = [item[0] for item in result]
 
 # Closing the connection
 db_cur.close()
