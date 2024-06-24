@@ -18,7 +18,7 @@ three_months_ago = datetime.now() - timedelta(days=90)
 three_months_ago_str = three_months_ago.strftime('%Y-%m-%d')
 
 # Correct SQL query
-query = 'SELECT id FROM public."Scenarios" WHERE upload_date > %s'
+query = 'SELECT id FROM public."Scenarios" WHERE upload_date < %s'
 
 # Executing the SQL query
 db_cur.execute(query, (three_months_ago_str,))
@@ -28,12 +28,14 @@ result = db_cur.fetchall()
 
 ids = [item[0] for item in result]
 
-deleteQuery = 'DELETE FROM public."Scenarios" WHERE id = %s'
-print('Deleting the following ids:', ids[0])
-db_cur.execute(deleteQuery, (ids[0],))
+print(ids)
 
-# Closing the connection
-db_cur.close()
-db_conn.close()
+# deleteQuery = 'DELETE FROM public."Scenarios" WHERE id = %s'
+# print('Deleting the following ids:', ids[0])
+# db_cur.execute(deleteQuery, (ids[0],))
 
-print('Deleted ids:', ids[0])
+# # Closing the connection
+# db_cur.close()
+# db_conn.close()
+
+# print('Deleted ids:', ids[0])
