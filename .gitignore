@@ -1,6 +1,5 @@
 public
 excelFiles
 logs
-*.py
 node_modules
 .env
