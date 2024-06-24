@@ -18,7 +18,7 @@ three_months_ago = datetime.now() - timedelta(days=90)
 three_months_ago_str = three_months_ago.strftime('%Y-%m-%d')
 
 # Correct SQL query
-query = 'SELECT id FROM public."Scenarios" WHERE uploaded_date > %s'
+query = 'SELECT id FROM public."Scenarios" WHERE upload_date > %s'
 
 # Executing the SQL query
 db_cur.execute(query, (three_months_ago_str,))
