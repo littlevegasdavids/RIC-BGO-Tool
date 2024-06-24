@@ -7,7 +7,7 @@ const logger = require('../helpers/logger')
 const bcrypt = require('bcrypt')
 const saltRounds = 9;
 
-const {sendRegisterMail, sendAdminChangePassword} = require('../helpers/mailer')
+//const {sendRegisterMail, sendAdminChangePassword} = require('../helpers/mailer')
 
 const {checkEmail, checkPassword} = require('../helpers/checker')
 
@@ -133,7 +133,7 @@ router.post('/changePasswordAdmin/:id', authenticateTokenAdmin, async(req, res)=
                     return res.status(500).json({success:false})
                 }
                 const {rows} = await db.query(`UPDATE public."Users" SET password = $1 WHERE id = $2 RETURNING email`, [hash, user_id])
-                sendAdminChangePassword(rows[0].email)
+                //sendAdminChangePassword(rows[0].email)
                 logger.info(`Admin changed password User #${user_id}: Admin #${admin_id}`)
                 return res.status(200).json({
                     success: true
@@ -191,7 +191,7 @@ router.post('/createNewUser', authenticateTokenAdmin, async (req, res)=>{
             const {rows} = await db.query(`INSERT INTO public."Users"(name, role_id, password, email) VALUES($1, $2, $3, $4) RETURNING id` , [name, role_id, hash, email])
             
             logger.info(`New User #${rows[0].id} role ${role_id}: Admin #${admin_id}`)
-            sendRegisterMail(email, name)
+            //sendRegisterMail(email, name)
             return res.status(200).json({
                 success: true
             })
