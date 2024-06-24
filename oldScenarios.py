@@ -13,12 +13,21 @@ db_conn = psycopg2.connect(
 )
 db_cur = db_conn.cursor()
 
-# Calculate the date 3 months ago
+# Calculating the date three months ago from today
 three_months_ago = datetime.now() - timedelta(days=90)
-    
-# Convert to the appropriate format if needed
 three_months_ago_str = three_months_ago.strftime('%Y-%m-%d')
 
-ids = db_cur.execute('SELECT id "public"."Scenarios" WHERE uploaded_date > ', (three_months_ago_str))
+# Correct SQL query
+query = 'SELECT id FROM public."Scenarios" WHERE uploaded_date > %s'
+
+# Executing the SQL query
+db_cur.execute(query, (three_months_ago_str,))
+
+# Fetching the results
+ids = db_cur.fetchall()
+
+# Closing the connection
+db_cur.close()
+db_conn.close()
 
 print(ids)
