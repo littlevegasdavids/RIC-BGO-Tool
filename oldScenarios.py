@@ -26,7 +26,7 @@ result = db_cur.fetchall()
 ids = [item[0] for item in result]
 
 #print('The following ids are older than three months:', ids)
-id = min(id)
+id = min(ids)
 print('Deleting the following id:', id)
 db_cur.execute('DELETE FROM public."Scenarios" WHERE id = %s', (id,))
 db_conn.commit()
