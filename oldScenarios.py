@@ -29,11 +29,11 @@ result = db_cur.fetchall()
 ids = [item[0] for item in result]
 
 deleteQuery = 'DELETE FROM public."Scenarios" WHERE id = %s'
-print('Deleting the following ids:', ids)
+print('Deleting the following ids:', ids[0])
 db_cur.execute(deleteQuery, (ids[0],))
 
 # Closing the connection
 db_cur.close()
 db_conn.close()
 
-print('Deleted ids:', ids)
+print('Deleted ids:', ids[0])
