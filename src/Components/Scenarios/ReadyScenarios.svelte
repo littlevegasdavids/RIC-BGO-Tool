@@ -231,7 +231,7 @@
 
     {#if readyScenarios.length != 0}
       {#if finalScenarios.length != 0}
-        <div class="card shadow-lg mt-5 bg-info">
+        <div class="card shadow-lg mt-5 bg-blue-400">
           <div class="card-body">
             <p class="card-title text-black text-center text-3xl">Ready</p>
             {#each finalScenarios as file}

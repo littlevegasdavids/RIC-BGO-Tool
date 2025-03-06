@@ -47,7 +47,7 @@
 >
   <div class="flex flex-col justify-center items-center mb-3">
     <div
-      class="shadow-lg form-container bg-warning text-black max-w-3xl rounded-xl p-5"
+      class="shadow-lg form-container bg-base-300 text-black max-w-3xl rounded-xl p-5"
     >
       <span class="font-bold text-lg underline">Upload scenario</span><br />
       <input
