@@ -13,7 +13,7 @@
             </p>
             
             <p class="footer-info">
-                <i class="fas fa-hammer"></i>Website designed by Reno Davids
+                <i class="fas fa-hammer"></i>Website designed by Reno
             </p>
         </div>
         <img src="images/MarkBrewing_Logo.png" alt="Mark Anthony Brewing Logo" width="125px" height="70px" class="mr-37">
