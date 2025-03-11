@@ -1,15 +1,18 @@
-name: Deploy BGO Tool
+name: Deploy Svelte App
 
 on:
   push:
     branches:
-      - master 
+      - main  # Change to your deployment branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -17,8 +20,10 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd RIC-BGO-Tool
-            git pull
-            npm install
-            npm run build
-            pm2 restart BGO-Tool
+            bash -l -c '
+              cd ~/RIC-BGO-Tool
+              git pull origin main
+              npm install
+              npm run build
+              pm2 restart BGO-Tool
+            '
