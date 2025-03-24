@@ -85,7 +85,7 @@
         >
       </div>
 
-      <div
+      <!-- <div
         class="tooltip tooltip-bottom font-bold ml-3"
         data-tip="Open in Streamlit"
       >
@@ -97,7 +97,7 @@
             ><i class="fas fa-chart-bar"></i></button
           ></a
         >
-      </div>
+      </div> -->
 
       <div class="tooltip tooltip-bottom font-bold ml-3" data-tip="Delete">
         <button
