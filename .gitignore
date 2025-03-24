@@ -1,5 +1,7 @@
-public
+public/build
 excelFiles
 logs
 node_modules
 .env
+.DS_Store
+Solver.py
