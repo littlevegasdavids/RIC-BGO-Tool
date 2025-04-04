@@ -85,19 +85,19 @@
         >
       </div>
 
-      <!-- <div
+      <div
         class="tooltip tooltip-bottom font-bold ml-3"
-        data-tip="Open in Streamlit"
+        data-tip="View analytics"
       >
         <a
-          href={`http://localhost:8501/?id=${fileId}`}
+          href={`https://analytics.bgotool.ricgroup.net/?id=${fileId}`}
           target="_blank"
           rel="noreferrer"
           ><button class="btn btn-sm btn-success btn-circle text-white"
             ><i class="fas fa-chart-bar"></i></button
           ></a
         >
-      </div> -->
+      </div>
 
       <div class="tooltip tooltip-bottom font-bold ml-3" data-tip="Delete">
         <button
