@@ -39,7 +39,7 @@
         id="inputPass"
         name="password"
       />
-      <button class="btn btn-accent" type="submit">Sign in</button>
+      <button class="btn btn-neutral" type="submit">Sign in</button>
       {#if showError}
         <p class="text-error font-bold text-lg text-center">
           Invalid email / password
