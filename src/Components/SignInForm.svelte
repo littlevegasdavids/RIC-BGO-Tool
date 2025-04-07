@@ -31,7 +31,7 @@
         <div class="card-body">
             <input type="text" placeholder="Email" class="input" name="email">
             <input type="password" placeholder="Password" class="input" id="inputPass" name="password">
-            <button class="btn btn-outline" id="signBtn" type="submit">Sign in</button>
+            <button class="btn btn-neutral" id="signBtn" type="submit">Sign in</button>
             {#if showError}
             <p class="text-error font-bold text-l text-centre">Invalid login credentials</p>
             {/if}
