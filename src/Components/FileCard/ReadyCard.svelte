@@ -58,7 +58,7 @@
       </h1>
     </div>
     <div class="justify-self-end">
-      <div
+      <!-- <div
         class="tooltip tooltip-bottom font-bold"
         data-tip="Send to Solver Queue"
       >
@@ -66,9 +66,10 @@
           class="btn btn-sm btn-primary btn-circle text-white"
           id="solverButton"
           on:click={() => sendToQueue()}
+          
           ><i class="fas fa-paper-plane"></i></button
         >
-      </div>
+      </div> -->
 
       <div
         class="tooltip tooltip-bottom font-bold ml-3"
