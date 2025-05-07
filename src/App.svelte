@@ -37,8 +37,13 @@
 <Router>
   <div class="flex flex-col min-h-screen bg-neutral-content font-sans">
     <div class="w-full max-w-7xl mx-auto flex flex-col flex-grow">
+      
       <NavBar {login} />
-
+      <div class="rounded-lg bg-red-400 p-5 mb-3 text-white mt-5 w-1/2 mx-auto">
+        <p class="text-center text-xl pr-3">
+          Solver has been disabled for temporary maintenance.
+        </p>
+      </div>
       <main class="flex-grow">
         <div class="max-w-6xl mx-auto rounded-lg p-6">
           <Route path="/passwordReset">
