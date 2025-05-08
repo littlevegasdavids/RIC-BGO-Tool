@@ -1,25 +1,3 @@
-(venv) vmgbdeyo@vm439gbde:~/RIC-BGO-Tool$ git add .
-(venv) vmgbdeyo@vm439gbde:~/RIC-BGO-Tool$ git push
-Username for 'https://github.com': littlevegasdavids
-Password for 'https://littlevegasdavids@github.com': 
-remote: Support for password authentication was removed on August 13, 2021.
-remote: Please see https://docs.github.com/get-started/getting-started-with-git/about-remote-repositories#cloning-with-https-urls for information on currently recommended modes of authentication.
-fatal: Authentication failed for 'https://github.com/littlevegasdavids/RIC-BGO-Tool.git/'
-(venv) vmgbdeyo@vm439gbde:~/RIC-BGO-Tool$ ls
-README.md   logs               package.json      server.js
-Solver.py   middleware         public            solver_requirements.txt
-db          node_modules       rollup.config.js  src
-excelFiles  oldScenarios.py    routes            venv
-helpers     package-lock.json  scripts
-(venv) vmgbdeyo@vm439gbde:~/RIC-BGO-Tool$ nano solver_requirements.txt
-(venv) vmgbdeyo@vm439gbde:~/RIC-BGO-Tool$ pip freeze > solver_requirements.txt
-(venv) vmgbdeyo@vm439gbde:~/RIC-BGO-Tool$ nano solver_requirements.txt
-
-
-
-
-
-  GNU nano 7.2                 solver_requirements.txt                          
 certifi==2025.4.26
 charset-normalizer==3.4.2
 gurobipy==12.0.2
