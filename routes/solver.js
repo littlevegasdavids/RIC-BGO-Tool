@@ -159,7 +159,7 @@ var solveScenario = async function (scenario_id, user_email, callback) {
     );
     writeStream.write(`### Scenario id: ${scenario_id} ###\n`);
 
-    py = pySpawn("python3", ["-u", pythonFileName, scenario_id]);
+    py = pySpawn("./venv/bin/python3", ["-u", pythonFileName, scenario_id]);
     await db.query(
       'UPDATE public."Scenarios" SET scenario_status = $1 WHERE id = $2',
       [1, scenario_id]
