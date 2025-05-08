@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = new Router();
 const { authenticateToken } = require("../middleware/authMiddleware");
+const path = require("path");
 
 const logger = require("../helpers/logger");
 
