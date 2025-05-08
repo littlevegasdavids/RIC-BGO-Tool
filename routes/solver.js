@@ -95,12 +95,10 @@ router.delete("/killSolver/:id", authenticateToken, async function (req, res) {
         logger.warn(
           `Kill scenario #${fileId}: User #${user_id} tried to kill scenario when not allowed to`
         );
-        return res
-          .status(401)
-          .json({
-            success: false,
-            message: "Not allowed to kill the current scenario",
-          });
+        return res.status(401).json({
+          success: false,
+          message: "Not allowed to kill the current scenario",
+        });
       }
     }
     await db.query(
@@ -160,7 +158,8 @@ var solveScenario = async function (scenario_id, user_email, callback) {
     writeStream.write(`### Scenario id: ${scenario_id} ###\n`);
 
     const pythonExecutable = path.join(__dirname, "../../venv/bin/python");
-    py = pySpawn(pythonExecutable, ["-u", pythonFileName, scenario_id]);
+    //py = pySpawn(pythonExecutable, ["-u", pythonFileName, scenario_id]);
+    py = pySpawn(pythonExecutable, ["-u", "test.py"]);
     await db.query(
       'UPDATE public."Scenarios" SET scenario_status = $1 WHERE id = $2',
       [1, scenario_id]
