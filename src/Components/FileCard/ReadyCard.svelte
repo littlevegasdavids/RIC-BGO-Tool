@@ -63,7 +63,7 @@
         data-tip="Send to Solver Queue"
       >
         <button
-          class="btn btn-sm btn-primary btn-circle text-white"
+          class="btn btn-sm btn-primary btn-circle text-white btn-disabled"
           id="solverButton"
           on:click={() => sendToQueue()}
           
