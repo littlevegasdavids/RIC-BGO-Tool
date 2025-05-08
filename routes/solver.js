@@ -160,7 +160,9 @@ var solveScenario = async function (scenario_id, user_email, callback) {
 
     const pythonExecutable = path.join(__dirname, "../venv/bin/python");
     py = pySpawn(pythonExecutable, ["-u", pythonFileName, scenario_id]);
-    //py = pySpawn(pythonExecutable, ["-u", "test.py"]);
+    await db.query(
+      'UPDATE public."Solver_Busy" SET is_busy = true WHERE id = 1'
+    );
     await db.query(
       'UPDATE public."Scenarios" SET scenario_status = $1 WHERE id = $2',
       [1, scenario_id]
