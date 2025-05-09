@@ -79,7 +79,7 @@
         data-tip="Download Log File"
       >
         <button
-          class="btn btn-sm btn-secondary btn-circle text-white btn-disabled"
+          class="btn btn-sm btn-secondary btn-circle text-white"
           on:click={() => downloadLogFile()}
           ><i class="fas fa-file-download"></i></button
         >
